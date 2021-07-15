@@ -3,6 +3,8 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+
+
         List<String>url_list = new ArrayList<String>();
         try {
             File file = new File("urls.txt");
@@ -28,18 +30,19 @@ public class Main {
             e.printStackTrace();
         }
 
-        List<String> url_list_sort = new ArrayList<String>();
+
+
+
         Set<String> set = new HashSet<String>(url_list);
+        HashMap<String, Integer> map = new HashMap<>();
         for (String r : set) {
-            int t =Collections.frequency(url_list, r);
-            url_list_sort.add(t+":"+r);
+            map.put(r,Collections.frequency(url_list, r));
 
         }
 
-        Collections.sort(url_list_sort);
+        map.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEach(System.out::println);
 
-        for (String f:url_list_sort) {
-            System.out.println(f);
-        }
     }
 }
