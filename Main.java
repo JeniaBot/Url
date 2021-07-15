@@ -2,12 +2,24 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
+    static List<String>url_list = new ArrayList<>();
+    
+    public static void main(String[] args) throws IOException {
+        Url_txt("urls.txt");
+         Set<String> set = new HashSet<>(url_list);
+         Map<String, Integer> map = new LinkedHashMap<>();
+        for (String r : set) {
+            map.put(r,Collections.frequency(url_list, r));
+        }
 
+        map.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(10)
+                .forEach(System.out::println);
 
-        List<String>url_list = new ArrayList<String>();
-        try {
-            File file = new File("urls.txt");
+    }
+
+    public static void Url_txt(String url) throws IOException {
+            File file = new File(url);
             FileReader fr = new FileReader(file);
             BufferedReader reader = new BufferedReader(fr);
             String line = reader.readLine();
@@ -22,26 +34,5 @@ public class Main {
                 url_list.add(str);
                 line = reader.readLine();
             }
-        }
-
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-        Set<String> set = new HashSet<String>(url_list);
-        HashMap<String, Integer> map = new HashMap<>();
-        for (String r : set) {
-            map.put(r,Collections.frequency(url_list, r));
-
-        }
-
-        map.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(10)
-                .forEach(System.out::println);
     }
 }
