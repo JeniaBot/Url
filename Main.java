@@ -41,8 +41,7 @@ public class Main {
         }
 
         map.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).limit(10)
                 .forEach(System.out::println);
-
     }
 }
